@@ -17,7 +17,7 @@ namespace Models.Collections
         //    incomes.Add(income);
         //}
 
-        public ObservableCollection<Income> GetExpenses()
+        public ObservableCollection<Income> GetIncomes()
         {
             return incomes;
         }

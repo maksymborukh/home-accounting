@@ -26,7 +26,7 @@ namespace UI
 
         private void Left_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            
         }
 
         private void Right_MouseDown(object sender, MouseButtonEventArgs e)
@@ -42,6 +42,16 @@ namespace UI
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Income_Click(object sender, RoutedEventArgs e)
+        {
+            Table.ItemsSource = "{Binding Source={StaticResource IncomeProvider}}";
+        }
+
+        private void Expense_Click(object sender, RoutedEventArgs e)
+        {
+            Table.ItemsSource = "{Binding Source={StaticResource ExpenseProvider}}";
         }
     }
 }
