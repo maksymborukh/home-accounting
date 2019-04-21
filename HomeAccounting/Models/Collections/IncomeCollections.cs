@@ -12,10 +12,10 @@ namespace Models.Collections
             incomes = new ObservableCollection<Income>();
         }
 
-        public void Add(Income income)
-        {
-            incomes.Add(income);
-        }
+        //public void Add(Income income)
+        //{
+        //    incomes.Add(income);
+        //}
 
         public ObservableCollection<Income> GetExpenses()
         {

@@ -12,10 +12,10 @@ namespace Models.Collections
             expenses = new ObservableCollection<Expense>();
         }
 
-        public void Add(Expense expense)
-        {
-            expenses.Add(expense);
-        }
+        //public void Add(Expense expense)
+        //{
+        //    expenses.Add(expense);
+        //}
 
         public ObservableCollection<Expense> GetExpenses()
         {
