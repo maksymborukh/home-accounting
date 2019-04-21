@@ -46,6 +46,7 @@
     <Compile Include="Abstract\IIncomeRepository.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Concrete\Operations\ExpenseRepository.cs" />
+    <Compile Include="Concrete\Operations\IncomeRepository.cs" />
     <Compile Include="Core\ConfigurationSetting.cs" />
     <Compile Include="Core\DBHelper.cs" />
     <Compile Include="Core\DBManager.cs" />

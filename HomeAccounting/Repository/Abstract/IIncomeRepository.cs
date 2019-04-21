@@ -5,7 +5,7 @@ namespace Repository.Abstract
 {
     interface IIncomeRepository
     {
-        void Add(Income income);
+        void Insert(Income income);
         void Delete(long Id);
         void Update(Income income);
         ObservableCollection<Income> GetAll();
