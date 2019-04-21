@@ -26,13 +26,65 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
+            <!-- menu placement -->
             <WrapPanel Grid.Row="0">
-                <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5,0,0">
-                    <MenuItem Header="File" HorizontalAlignment="Left" Margin="0" Padding="6,0">
+                
+                <!-- background -->
+                <WrapPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF65B1D3" Offset="0"/>
+                        <GradientStop Color="#FFB3E0F4" Offset="1"/>
+                    </LinearGradientBrush>
+                </WrapPanel.Background>
+                
+                <!-- content -->
+                <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,3,0,0" Background="{x:Null}">
+                    <MenuItem Header="File" HorizontalAlignment="Left" Margin="0" Padding="6,0" FontSize="16">
                         <TextBlock Text="Exit" MouseDown="Exit_MouseDown"/>
                     </MenuItem>
-                    <MenuItem Header="Help" Margin="0"/>
+                    <Separator/>
+                    <MenuItem Header="Help" Margin="0" FontSize="16">
+                        <TextBlock Text="Support" MouseDown="Support_MouseDown"/>
+                    </MenuItem>
                 </Menu>
+            </WrapPanel>
+            
+            <!-- icons -->
+            <WrapPanel Grid.Row="2" >
+                
+                <!-- background -->
+                <WrapPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF65B1D3" Offset="0"/>
+                        <GradientStop Color="#FFB3E0F4" Offset="1"/>
+                    </LinearGradientBrush>
+                </WrapPanel.Background>
+
+                <!-- content -->
+
+                <!-- transaction -->
+                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Transaction_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/transaction.png"/>
+                    <TextBlock Text="Transaction" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Account -->
+                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Account_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/account.png"/>
+                    <TextBlock Text="Account" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Budget -->
+                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Budget_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/budget.png"/>
+                    <TextBlock Text="Budget" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Support -->
+                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Support_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/support.jpg"/>
+                    <TextBlock Text="Support" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
             </WrapPanel>
         </Grid>
         
