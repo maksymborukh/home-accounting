@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Collections\ExpenseCollections.cs" />
+    <Compile Include="Collections\IncomeCollections.cs" />
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\Income.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

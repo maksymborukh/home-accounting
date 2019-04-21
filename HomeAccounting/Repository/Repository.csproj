@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,12 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IExpenseRepository.cs" />
+    <Compile Include="Abstract\IIncomeRepository.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Concrete\Operations\ExpenseRepository.cs" />
+    <Compile Include="Core\ConfigurationSetting.cs" />
+    <Compile Include="Core\DBHelper.cs" />
+    <Compile Include="Core\DBManager.cs" />
+    <Compile Include="Core\ProviderManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Abstract\" />
-    <Folder Include="Concrete\" />
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{e4fcd108-b729-4ae7-a5a1-9fa90a62b64a}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
