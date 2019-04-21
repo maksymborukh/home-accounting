@@ -42,7 +42,7 @@ namespace UI
 
         private void Budget_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            MessageBox.Show("In developing");
         }
 
         private void Support_MouseDown(object sender, MouseButtonEventArgs e)

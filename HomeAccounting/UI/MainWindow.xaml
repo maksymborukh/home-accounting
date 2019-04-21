@@ -21,8 +21,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="5"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="*"/>
@@ -52,44 +50,8 @@
                 </Menu>
             </WrapPanel>
 
-            <!-- icons -->
-            <WrapPanel Grid.Row="2" >
-                <!-- background -->
-                <WrapPanel.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF65B1D3" Offset="0"/>
-                        <GradientStop Color="#FFB3E0F4" Offset="1"/>
-                    </LinearGradientBrush>
-                </WrapPanel.Background>
-
-                <!-- content -->
-                <!-- transaction -->
-                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Transaction_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/transaction.png"/>
-                    <TextBlock Text="Transaction" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
-                </StackPanel>
-
-                <!-- Account -->
-                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Account_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/account.png"/>
-                    <TextBlock Text="Account" VerticalAlignment="Bottom" Margin="0,5,13.6,0" HorizontalAlignment="Right"/>
-                </StackPanel>
-
-                <!-- Budget -->
-                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Budget_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/budget.png"/>
-                    <TextBlock Text="Budget" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
-                </StackPanel>
-
-                <!-- Support -->
-                <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Support_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/support.jpg"/>
-                    <TextBlock Text="Support" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </WrapPanel>
-
             <!-- period of time -->
-            <WrapPanel Grid.Row="4">
+            <WrapPanel Grid.Row="2">
                 <!-- background -->
                 <WrapPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -118,9 +80,9 @@
             </WrapPanel>
 
             <!-- main content -->
-            <Grid Grid.Row="6">
+            <Grid Grid.Row="4" Margin="5,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
 
@@ -128,24 +90,44 @@
 
                 <!-- payments -->
                 <StackPanel Height="90" VerticalAlignment="Top">
-                    <TextBlock Text="Cash" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
-                    <TextBlock Text="Master Card" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
-                    <TextBlock Text="Visa" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
+                    <Button Content="Cash" FontSize="16" Cursor="Hand" Margin="0,0,0,0" />
+                    <Button Content="Master Card" FontSize="16" Cursor="Hand" Margin="0,5,0,0" />
+                    <Button Content="Visa" FontSize="16" Cursor="Hand" Margin="0,5,0,0" />
                 </StackPanel>
 
                 <!-- payments info -->
                 <StackPanel Margin="0,90,0,0">
+                    <TextBlock Text="Income" FontSize="16" Margin="5,0,0,0"/>
+                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
 
+                    <TextBlock Text="Expenses" FontSize="16" Margin="5,0,0,0"/>
+                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+
+                    <TextBlock Text="Currency" FontSize="16" Margin="5,0,0,0"/>
+                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+
+                    <TextBlock Text="Balance" FontSize="16" Margin="5,0,0,0"/>
+                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
                 </StackPanel>
 
                 <!-- main info -->
                 <Grid x:Name="ContainerForPages" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
 
+                        <StackPanel Grid.Column="1" Margin="0,0,5,0">
+                            <Button Content="Add" FontSize="16" Margin="0,0,0,5"/>
+                            <Button Content="Delete" FontSize="16"/>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </Grid>
             
             <!-- current date -->
-            <WrapPanel Grid.Row="8">
+            <WrapPanel Grid.Row="6">
                 <TextBlock Text="{Binding date}" FontSize="16" Margin="10,0"/>
             </WrapPanel>
         </Grid>
