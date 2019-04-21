@@ -163,6 +163,9 @@
                                 <ListBoxItem Content="Income"/>
                                 <ListBoxItem Content="Expenses"/>
                             </ListBox>
+                            <Separator Height="10"/>
+                            <TextBlock Text="Total:" Margin="5,0,0,0"/>
+                            <Separator Height="10" Margin="0,2,0,10"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
@@ -186,7 +189,7 @@
                                  ItemsSource="{Binding Source={StaticResource productProvider}}">
                             </ListBox>
                         </StackPanel>
-                        
+
                     </Grid>
                 </Grid>
             </Grid>
@@ -196,6 +199,5 @@
                 <TextBlock Text="{Binding date}" FontSize="16" Margin="10,0"/>
             </WrapPanel>
         </Grid>
-
     </Grid>
 </Window>
