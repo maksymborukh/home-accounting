@@ -4,14 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
+        xmlns:Date="clr-namespace:UI.Date"
         mc:Ignorable="d"
         Title="Finance" 
         Height="550" Width="800"
         MinHeight="550"
         MinWidth="800" 
         WindowStartupLocation="CenterScreen">
-    
-    <Grid>
+    <Window.DataContext>
+        <Date:Date/>
+    </Window.DataContext>
+
+            <Grid>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -35,7 +39,7 @@
                         <GradientStop Color="#FFB3E0F4" Offset="1"/>
                     </LinearGradientBrush>
                 </WrapPanel.Background>
-                
+
                 <!-- content -->
                 <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,3,0,0" Background="{x:Null}">
                     <MenuItem Header="File" HorizontalAlignment="Left" Margin="0" Padding="6,0" FontSize="16">
@@ -47,7 +51,7 @@
                     </MenuItem>
                 </Menu>
             </WrapPanel>
-            
+
             <!-- icons -->
             <WrapPanel Grid.Row="2" >
                 <!-- background -->
@@ -68,7 +72,7 @@
                 <!-- Account -->
                 <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Account_MouseDown" Cursor="Hand">
                     <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/account.png"/>
-                    <TextBlock Text="Account" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Account" VerticalAlignment="Bottom" Margin="0,5,13.6,0" HorizontalAlignment="Right"/>
                 </StackPanel>
 
                 <!-- Budget -->
@@ -83,7 +87,7 @@
                     <TextBlock Text="Support" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
                 </StackPanel>
             </WrapPanel>
-            
+
             <!-- period of time -->
             <WrapPanel Grid.Row="4">
                 <!-- background -->
@@ -93,14 +97,14 @@
                         <GradientStop Color="#FFB3E0F4" Offset="1"/>
                     </LinearGradientBrush>
                 </WrapPanel.Background>
-                
+
                 <!-- content -->
-                
+
                 <!-- left -->
                 <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Left_MouseDown" Cursor="Hand">
                     <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/left.png"/>
                 </StackPanel>
-                
+
                 <!-- right -->
                 <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Right_MouseDown" Cursor="Hand">
                     <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/right.png"/>
@@ -112,7 +116,39 @@
                     <TextBlock Text="Month" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
                 </WrapPanel>
             </WrapPanel>
+
+            <!-- main content -->
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- content -->
+
+                <!-- payments -->
+                <StackPanel Height="90" VerticalAlignment="Top">
+                    <TextBlock Text="Cash" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
+                    <TextBlock Text="Master Card" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
+                    <TextBlock Text="Visa" FontSize="16" Cursor="Hand" Margin="10,5,0,0" />
+                </StackPanel>
+
+                <!-- payments info -->
+                <StackPanel Margin="0,90,0,0">
+
+                </StackPanel>
+
+                <!-- main info -->
+                <Grid x:Name="ContainerForPages" Grid.Column="1">
+
+                </Grid>
+            </Grid>
+            
+            <!-- current date -->
+            <WrapPanel Grid.Row="8">
+                <TextBlock Text="{Binding date}" FontSize="16" Margin="10,0"/>
+            </WrapPanel>
         </Grid>
-        
+
     </Grid>
 </Window>

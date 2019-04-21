@@ -37,7 +37,7 @@ namespace UI
 
         private void Account_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            MessageBox.Show("In developing");
         }
 
         private void Budget_MouseDown(object sender, MouseButtonEventArgs e)
