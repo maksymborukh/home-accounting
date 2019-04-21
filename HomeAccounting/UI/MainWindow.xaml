@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Finance" 
+        Height="550" Width="800"
+        MinHeight="550"
+        MinWidth="800" 
+        WindowStartupLocation="CenterScreen">
+    
     <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <WrapPanel Grid.Row="0">
+                <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5,0,0">
+                    <MenuItem Header="File" HorizontalAlignment="Left" Margin="0" Padding="6,0">
+                        <TextBlock Text="Exit" MouseDown="Exit_MouseDown"/>
+                    </MenuItem>
+                    <MenuItem Header="Help" Margin="0"/>
+                </Menu>
+            </WrapPanel>
+        </Grid>
         
     </Grid>
 </Window>

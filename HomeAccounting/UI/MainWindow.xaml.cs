@@ -24,5 +24,10 @@ namespace UI
         {
             InitializeComponent();
         }
+
+        private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
