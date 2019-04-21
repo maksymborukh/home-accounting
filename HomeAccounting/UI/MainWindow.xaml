@@ -28,7 +28,6 @@
 
             <!-- menu placement -->
             <WrapPanel Grid.Row="0">
-                
                 <!-- background -->
                 <WrapPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -51,7 +50,6 @@
             
             <!-- icons -->
             <WrapPanel Grid.Row="2" >
-                
                 <!-- background -->
                 <WrapPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -61,7 +59,6 @@
                 </WrapPanel.Background>
 
                 <!-- content -->
-
                 <!-- transaction -->
                 <StackPanel Width="70" Height="70" Margin="5,5,10,0" MouseDown="Transaction_MouseDown" Cursor="Hand">
                     <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/transaction.png"/>
@@ -85,6 +82,35 @@
                     <Image Width="50" Height="40" Margin="0,5,0,0" Source="images/support.jpg"/>
                     <TextBlock Text="Support" VerticalAlignment="Bottom" Margin="0,5,0,0" HorizontalAlignment="Center"/>
                 </StackPanel>
+            </WrapPanel>
+            
+            <!-- period of time -->
+            <WrapPanel Grid.Row="4">
+                <!-- background -->
+                <WrapPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF65B1D3" Offset="0"/>
+                        <GradientStop Color="#FFB3E0F4" Offset="1"/>
+                    </LinearGradientBrush>
+                </WrapPanel.Background>
+                
+                <!-- content -->
+                
+                <!-- left -->
+                <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Left_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/left.png"/>
+                </StackPanel>
+                
+                <!-- right -->
+                <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Right_MouseDown" Cursor="Hand">
+                    <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/right.png"/>
+                </StackPanel>
+
+                <!-- right -->
+                <WrapPanel Width="Auto" Height="40" Margin="5,5,10,0" MouseDown="Calendar_MouseDown" Cursor="Hand">
+                    <Image Width="40" Height="30" Margin="50,5,0,0" Source="images/calendar.png"/>
+                    <TextBlock Text="Month" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+                </WrapPanel>
             </WrapPanel>
         </Grid>
         

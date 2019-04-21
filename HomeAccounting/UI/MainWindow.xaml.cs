@@ -50,7 +50,17 @@ namespace UI
             MessageBox.Show("In developing");
         }
 
-        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Left_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Right_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Calendar_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
         }
