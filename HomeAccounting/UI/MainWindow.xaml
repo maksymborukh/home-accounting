@@ -5,17 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         xmlns:Date="clr-namespace:UI.Date"
+        xmlns:Repository="clr-namespace:UI.Repository"
         mc:Ignorable="d"
         Title="Finance" 
         Height="550" Width="800"
         MinHeight="550"
         MinWidth="800" 
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.DataContext>
         <Date:Date/>
     </Window.DataContext>
 
-            <Grid>
+    <Window.Resources>
+        <!-- provider for getting data -->
+        <ObjectDataProvider x:Key="productProvider"
+                ObjectType="{x:Type Repository:ProductRepository}" MethodName="GetProducts" />
+
+        <!-- placement of product items -->
+        <ItemsPanelTemplate x:Key="listPanelTemplate">
+            <StackPanel />
+        </ItemsPanelTemplate>
+        
+        <!-- style of product item -->
+        <DataTemplate x:Key="MainProduct">
+            <Border x:Name="border" Width="488" Margin="-5,0,0,5" HorizontalAlignment="Left">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Path=Description}" FontSize="14" Grid.Column="0"/>
+                    <TextBlock Text="{Binding Path=Price}" FontSize="14" Grid.Column="1"/>
+                    <TextBlock Text="{Binding Path=Quantity}" FontSize="14" Grid.Column="2"/>
+                    <TextBlock Text="{Binding Path=Amount}" FontSize="14" Grid.Column="3"/>
+                    <TextBlock Text="{Binding Path=Percent}" FontSize="14" Grid.Column="4"/>
+                    <TextBlock Text="{Binding Path=Date}" FontSize="14" Grid.Column="5"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </Window.Resources>
+    
+    <Grid>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -114,7 +149,7 @@
                 <Grid x:Name="ContainerForPages" Grid.Column="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="488"/>
                             <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
 
@@ -122,6 +157,36 @@
                             <Button Content="Add" FontSize="16" Margin="0,0,0,5"/>
                             <Button Content="Delete" FontSize="16"/>
                         </StackPanel>
+
+                        <StackPanel Grid.Column="0">
+                            <ListBox>
+                                <ListBoxItem Content="Income"/>
+                                <ListBoxItem Content="Expenses"/>
+                            </ListBox>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Description" FontSize="14" Grid.Column="0"/>
+                                <TextBlock Text="Price" FontSize="14" Grid.Column="1"/>
+                                <TextBlock Text="Quantity" FontSize="14" Grid.Column="2"/>
+                                <TextBlock Text="Amount" FontSize="14" Grid.Column="3"/>
+                                <TextBlock Text="%" FontSize="14" Grid.Column="4"/>
+                                <TextBlock Text="Date" FontSize="14" Grid.Column="5"/>
+                            </Grid>
+                            <ListBox SelectionChanged="ListBox_SelectionChanged"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemsPanel="{StaticResource listPanelTemplate}"
+                                 ItemTemplate="{StaticResource MainProduct}"
+                                 ItemsSource="{Binding Source={StaticResource productProvider}}">
+                            </ListBox>
+                        </StackPanel>
+                        
                     </Grid>
                 </Grid>
             </Grid>

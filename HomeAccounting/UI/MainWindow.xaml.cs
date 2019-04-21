@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace UI
 {
@@ -30,21 +19,6 @@ namespace UI
             this.Close();
         }
 
-        private void Transaction_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("In developing");
-        }
-
-        private void Account_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("In developing");
-        }
-
-        private void Budget_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("In developing");
-        }
-
         private void Support_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("In developing");
@@ -61,6 +35,11 @@ namespace UI
         }
 
         private void Calendar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
 
         }
