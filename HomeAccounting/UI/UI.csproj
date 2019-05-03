@@ -142,6 +142,10 @@
       <Project>{e4fcd108-b729-4ae7-a5a1-9fa90a62b64a}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{2B06B1F0-C9C6-4125-B10E-F65F05346174}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Service\Service.csproj">
       <Project>{e12de15b-b7e6-478b-8944-7ea1410fb866}</Project>
       <Name>Service</Name>

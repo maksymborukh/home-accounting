@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Repository.Concrete.Operations
 {
-    class IncomeRepository : IIncomeRepository
+    public class IncomeRepository : IIncomeRepository
     {
         DBManager dbManager = new DBManager("account");
         IDbConnection connection = null;
@@ -29,13 +29,13 @@ namespace Repository.Concrete.Operations
             dbManager.Delete(commandText, CommandType.Text, parameters.ToArray());
         }
 
-        public ObservableCollection<Income> GetAll()
+        public List<Income> GetAll()
         {
             string commandText = "select * from income";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
-                var incomes = new ObservableCollection<Income>();
+                var incomes = new List<Income>();
                 while (dataReader.Read())
                 {
                     var income = new Income();

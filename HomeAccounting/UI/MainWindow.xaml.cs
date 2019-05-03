@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Service;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -10,8 +11,8 @@ namespace UI
     public partial class MainWindow : Window
     {
         public MainWindow()
-        {
-            InitializeComponent();
+        {      
+            InitializeComponent();            
         }
 
         private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -46,12 +47,32 @@ namespace UI
 
         private void Income_Click(object sender, RoutedEventArgs e)
         {
-            Table.ItemsSource = "{Binding Source={StaticResource IncomeProvider}}";
+            WindowLoaded windowLoaded = new WindowLoaded();
+            Table.ItemsSource = windowLoaded.GetIncomes();            
         }
 
         private void Expense_Click(object sender, RoutedEventArgs e)
         {
-            Table.ItemsSource = "{Binding Source={StaticResource ExpenseProvider}}";
+            WindowLoaded windowLoaded = new WindowLoaded();
+            Table.ItemsSource = windowLoaded.GetExpenses();
+            
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //WindowLoaded windowLoaded = new WindowLoaded();
+            //windowLoaded.GetIncomes();
+
+        }
+
+        private void OpenAddWindow_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow.Visibility = Visibility.Visible;
+        }
+
+        private void CloseAddWindow_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow.Visibility = Visibility.Collapsed;
         }
     }
 }

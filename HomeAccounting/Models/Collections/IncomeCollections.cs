@@ -1,4 +1,5 @@
 ﻿using Models.Entities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Models.Collections
@@ -12,10 +13,13 @@ namespace Models.Collections
             incomes = new ObservableCollection<Income>();
         }
 
-        //public void Add(Income income)
-        //{
-        //    incomes.Add(income);
-        //}
+        public void Add(List<Income> incomes)
+        {
+            foreach (var inc in incomes)
+            {
+                this.incomes.Add(inc);
+            }
+        }
 
         public ObservableCollection<Income> GetIncomes()
         {

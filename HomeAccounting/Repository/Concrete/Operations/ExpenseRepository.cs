@@ -3,7 +3,6 @@ using Repository.Abstract;
 using Repository.Core;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 
 namespace Repository.Concrete.Operations
@@ -29,13 +28,13 @@ namespace Repository.Concrete.Operations
             dbManager.Delete(commandText, CommandType.Text, parameters.ToArray());
         }
 
-        public ObservableCollection<Expense> GetAll()
+        public List<Expense> GetAll()
         {
             string commandText = "select * from expense";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
-                var expenses = new ObservableCollection<Expense>();
+                var expenses = new List<Expense>();
                 while (dataReader.Read())
                 {
                     var expense = new Expense();

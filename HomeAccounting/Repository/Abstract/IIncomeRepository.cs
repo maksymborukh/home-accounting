@@ -1,5 +1,5 @@
 ﻿using Models.Entities;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Repository.Abstract
 {
@@ -8,7 +8,7 @@ namespace Repository.Abstract
         void Insert(Income income);
         void Delete(long Id);
         void Update(Income income);
-        ObservableCollection<Income> GetAll();
+        List<Income> GetAll();
         Income GetByID(long id);
     }
 }

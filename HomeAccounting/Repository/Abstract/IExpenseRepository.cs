@@ -1,5 +1,5 @@
 ﻿using Models.Entities;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Repository.Abstract
 {
@@ -8,7 +8,7 @@ namespace Repository.Abstract
         void Insert(Expense expense);
         void Delete(long Id);
         void Update(Expense expense);
-        ObservableCollection<Expense> GetAll();
+        List<Expense> GetAll();
         Expense GetByID(long id);
     }
 }
