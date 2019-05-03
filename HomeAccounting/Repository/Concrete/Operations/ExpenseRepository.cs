@@ -3,7 +3,6 @@ using Repository.Abstract;
 using Repository.Core;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 
 namespace Repository.Concrete.Operations
@@ -15,8 +14,8 @@ namespace Repository.Concrete.Operations
 
         public void Insert(Expense expense)
         {
-            string commandText = "insert into expense (Description, Price, Quantity, Amount, Percent, Date)" +
-                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @Date);";
+            string commandText = "insert into expense (Description, Price, Quantity, Amount, Percent, Day, Month, Year)" +
+                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @Day, @Month, @Year);";
             dbManager.Insert(commandText, CommandType.Text, Param(expense).ToArray());
         }
 
@@ -29,13 +28,13 @@ namespace Repository.Concrete.Operations
             dbManager.Delete(commandText, CommandType.Text, parameters.ToArray());
         }
 
-        public ObservableCollection<Expense> GetAll()
+        public List<Expense> GetAll()
         {
             string commandText = "select * from expense";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
-                var expenses = new ObservableCollection<Expense>();
+                var expenses = new List<Expense>();
                 while (dataReader.Read())
                 {
                     var expense = new Expense();
@@ -45,7 +44,44 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = dataReader["Date"].ToString();
+                    expense.Day = Convert.ToInt32(dataReader["Day"]);
+                    expense.Month = Convert.ToInt32(dataReader["Month"]);
+                    expense.Year = Convert.ToInt32(dataReader["Year"]);
+                    expenses.Add(expense);
+                }
+
+                return expenses;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dataReader.Close();
+                dbManager.CloseConnection(connection);
+            }
+        }
+
+        public List<Expense> GetByFilter(int month, int year)
+        {
+            string commandText = $"select * from expense where Month = {month} and Year = {year}";
+            var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
+            try
+            {
+                var expenses = new List<Expense>();
+                while (dataReader.Read())
+                {
+                    var expense = new Expense();
+                    expense.Id = Convert.ToInt64(dataReader["Id"]);
+                    expense.Description = dataReader["Description"].ToString();
+                    expense.Price = Convert.ToDouble(dataReader["Price"]);
+                    expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
+                    expense.Amount = Convert.ToDouble(dataReader["Amount"]);
+                    expense.Percent = Convert.ToDouble(dataReader["Percent"]);
+                    expense.Day = Convert.ToInt32(dataReader["Day"]);
+                    expense.Month = Convert.ToInt32(dataReader["Month"]);
+                    expense.Year = Convert.ToInt32(dataReader["Year"]);
                     expenses.Add(expense);
                 }
 
@@ -80,7 +116,9 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = dataReader["Date"].ToString();
+                    expense.Day = Convert.ToInt32(dataReader["Day"]);
+                    expense.Month = Convert.ToInt32(dataReader["Month"]);
+                    expense.Year = Convert.ToInt32(dataReader["Year"]);
                 }
 
                 return expense;
@@ -98,7 +136,8 @@ namespace Repository.Concrete.Operations
 
         public void Update(Expense expense)
         {
-            string commandText = "update expense set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, Date = @Date where Id = @Id;";
+            string commandText = "update expense set Description = @Description, Price = @Price, Quantity = @Quantity," +
+                " Amount = @Amount, Percent = @Percent, Day = @Day, Month = @Month, Year = @Year where Id = @Id;";
             dbManager.Update(commandText, CommandType.Text, Param(expense).ToArray());
         }
 
@@ -111,7 +150,9 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Quantity", expense.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", expense.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Percent", expense.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@Date", 50, expense.Date, DbType.String));
+            parameters.Add(dbManager.CreateParameter("@Day", expense.Day, DbType.Int32));
+            parameters.Add(dbManager.CreateParameter("@Month", expense.Month, DbType.Int32));
+            parameters.Add(dbManager.CreateParameter("@Year", expense.Year, DbType.Int32));
 
             return parameters;
         }

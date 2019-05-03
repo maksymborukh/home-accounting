@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IExpenseRepository.cs" />
     <Compile Include="Abstract\IIncomeRepository.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="WindowLoaded.cs" />
     <Compile Include="Concrete\Operations\ExpenseRepository.cs" />
     <Compile Include="Concrete\Operations\IncomeRepository.cs" />
     <Compile Include="Core\ConfigurationSetting.cs" />

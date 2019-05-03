@@ -5,22 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         xmlns:Date="clr-namespace:UI.Date"
-        xmlns:Repository="clr-namespace:UI.Repository"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"        
+        xmlns:Collections="clr-namespace:Models.Collections;assembly=Models"
         mc:Ignorable="d"
         Title="Finance" 
         Height="550" Width="800"
         MinHeight="550"
         MinWidth="800" 
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
     <Window.DataContext>
         <Date:Date/>
     </Window.DataContext>
 
     <Window.Resources>
         <!-- provider for getting data -->
-        <ObjectDataProvider x:Key="productProvider"
-                ObjectType="{x:Type Repository:ProductRepository}" MethodName="GetProducts" />
+        <ObjectDataProvider x:Key="IncomeProvider"
+                ObjectType="{x:Type Collections:IncomeCollections}" MethodName="GetIncomes" />
 
+        <ObjectDataProvider x:Key="ExpenseProvider"
+                ObjectType="{x:Type Collections:ExpenseCollections}" MethodName="GetExpenses" />
+        
         <!-- placement of product items -->
         <ItemsPanelTemplate x:Key="listPanelTemplate">
             <StackPanel />
@@ -36,14 +42,20 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.1*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding Path=Description}" FontSize="14" Grid.Column="0"/>
                     <TextBlock Text="{Binding Path=Price}" FontSize="14" Grid.Column="1"/>
                     <TextBlock Text="{Binding Path=Quantity}" FontSize="14" Grid.Column="2"/>
                     <TextBlock Text="{Binding Path=Amount}" FontSize="14" Grid.Column="3"/>
                     <TextBlock Text="{Binding Path=Percent}" FontSize="14" Grid.Column="4"/>
-                    <TextBlock Text="{Binding Path=Date}" FontSize="14" Grid.Column="5"/>
+                    <WrapPanel Grid.Column="5">
+                        <TextBlock Text="{Binding Path=Day}" FontSize="14"/>
+                        <TextBlock Text=" " FontSize="14"/>
+                        <TextBlock Text="{Binding Path=Month}" FontSize="14"/>
+                        <TextBlock Text=" " FontSize="14"/>
+                        <TextBlock Text="{Binding Path=Year}" FontSize="14"/>
+                    </WrapPanel>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -95,22 +107,12 @@
                     </LinearGradientBrush>
                 </WrapPanel.Background>
 
-                <!-- content -->
-
-                <!-- left -->
-                <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Left_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/left.png"/>
-                </StackPanel>
-
-                <!-- right -->
-                <StackPanel Width="40" Height="40" Margin="5,5,10,0" MouseDown="Right_MouseDown" Cursor="Hand">
-                    <Image Width="50" Height="30" Margin="0,5,0,0" Source="images/right.png"/>
-                </StackPanel>
-
-                <!-- right -->
-                <WrapPanel Width="Auto" Height="40" Margin="5,5,10,0" MouseDown="Calendar_MouseDown" Cursor="Hand">
-                    <Image Width="40" Height="30" Margin="50,5,0,0" Source="images/calendar.png"/>
-                    <TextBlock Text="Month" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+                <!-- calendar -->               
+                <WrapPanel Width="250" Height="40" Margin="310,5,10,0" Cursor="Hand">
+                    <Image Width="40" Height="30" Margin="50,5,0,0" Source="images/calendar.png"
+                           MouseDown="Calendar_MouseDown"/>
+                    <TextBlock x:Name="CalendarText" Text="ALL" VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" FontSize="16" MouseDown="CalendarAll_MouseDown"/>
                 </WrapPanel>
             </WrapPanel>
 
@@ -154,15 +156,13 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="1" Margin="0,0,5,0">
-                            <Button Content="Add" FontSize="16" Margin="0,0,0,5"/>
+                            <Button Content="Add" Click="OpenAddWindow_Click" FontSize="16" Margin="0,0,0,5"/>
                             <Button Content="Delete" FontSize="16"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="0">
-                            <ListBox>
-                                <ListBoxItem Content="Income"/>
-                                <ListBoxItem Content="Expenses"/>
-                            </ListBox>
+                            <Button Content="Income" Click="Income_Click" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            <Button Content="Expense" Click="Expense_Click" Margin="0,5,0,0" HorizontalAlignment="Center"/>
                             <Separator Height="10"/>
                             <TextBlock Text="Total:" Margin="5,0,0,0"/>
                             <Separator Height="10" Margin="0,2,0,10"/>
@@ -173,7 +173,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1.2*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Description" FontSize="14" Grid.Column="0"/>
                                 <TextBlock Text="Price" FontSize="14" Grid.Column="1"/>
@@ -182,11 +182,12 @@
                                 <TextBlock Text="%" FontSize="14" Grid.Column="4"/>
                                 <TextBlock Text="Date" FontSize="14" Grid.Column="5"/>
                             </Grid>
-                            <ListBox SelectionChanged="ListBox_SelectionChanged"
+                            <ListBox x:Name="Table" 
+                                 SelectionChanged="ListBox_SelectionChanged"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                  ItemsPanel="{StaticResource listPanelTemplate}"
                                  ItemTemplate="{StaticResource MainProduct}"
-                                 ItemsSource="{Binding Source={StaticResource productProvider}}">
+                                 ItemsSource="{Binding Source={StaticResource IncomeProvider}}">
                             </ListBox>
                         </StackPanel>
 
@@ -199,5 +200,85 @@
                 <TextBlock Text="{Binding date}" FontSize="16" Margin="10,0"/>
             </WrapPanel>
         </Grid>
+
+        <Calendar x:Name="Calendar" DisplayMode="Year" DisplayModeChanged="Calendar_DisplayModeChanged"
+                  Visibility="Collapsed" Margin="0,85,0,0" />
+        
+        <Border x:Name="AddWindow" Height="280" Width="300" Background="White" 
+                BorderBrush="Black" BorderThickness="1" Visibility="Collapsed">
+            <Grid>
+
+                <Grid Height="30" VerticalAlignment="Top" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton x:Name="IncomeRadioButton" Content="Income" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <RadioButton x:Name="ExpenseRadioButton" Content="Expense" Grid.Column="3" HorizontalAlignment="Center"/>
+                </Grid>
+
+                <Grid Height="200" VerticalAlignment="Top" Margin="0,40,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Description" Grid.Column="1" Grid.Row="1"/>
+                    <TextBox x:Name="DescriptionInput" Grid.Column="2" Grid.Row="1"/>
+
+                    <TextBlock Text="Price" Grid.Column="1" Grid.Row="3"/>
+                    <TextBox x:Name="PriceInput" Grid.Column="2" Grid.Row="3"/>
+
+                    <TextBlock Text="Quantity" Grid.Column="1" Grid.Row="5"/>
+                    <TextBox x:Name="QuantityInput" Grid.Column="2" Grid.Row="5"/>
+
+                    <TextBlock Text="Amount" Grid.Column="1" Grid.Row="7"/>
+                    <TextBox x:Name="AmountInput" Grid.Column="2" Grid.Row="7"/>
+
+                    <TextBlock Text="Percent" Grid.Column="1" Grid.Row="9"/>
+                    <TextBox x:Name="PercentInput" Grid.Column="2" Grid.Row="9"/>
+
+                    <TextBlock Text="Date" Grid.Column="1" Grid.Row="11"/>
+                    <DatePicker x:Name="DateInput" Grid.Column="2" Grid.Row="11"/>
+
+                </Grid>
+
+                <Grid Height="30" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Save" Click="SaveInput_Click" Grid.Column="1"/>
+                    <Button Content="Cancel" Click="CloseAddWindow_Click" Grid.Column="3"/>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
