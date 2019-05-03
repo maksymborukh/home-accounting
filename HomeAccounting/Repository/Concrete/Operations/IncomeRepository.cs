@@ -15,8 +15,8 @@ namespace Repository.Concrete.Operations
 
         public void Insert(Income income)
         {
-            string commandText = "insert into income (Description, Price, Quantity, Amount, Percent, AddDate)" +
-                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @AddDate);";
+            string commandText = "insert into income (Description, Price, Quantity, Amount, Percent, Day, Month, Year)" +
+                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @Day, @Month, @Year);";
             dbManager.Insert(commandText, CommandType.Text, Param(income).ToArray());
         }
 
@@ -45,7 +45,44 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.AddDate = dataReader["AddDate"].ToString();
+                    income.Day = Convert.ToInt32(dataReader["Day"]);
+                    income.Month = Convert.ToInt32(dataReader["Month"]);
+                    income.Year = Convert.ToInt32(dataReader["Year"]);
+                    incomes.Add(income);
+                }
+
+                return incomes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dataReader.Close();
+                dbManager.CloseConnection(connection);
+            }
+        }
+
+        public List<Income> GetByFilter(int month, int year)
+        {
+            string commandText = $"select * from income where Month = {month} and Year = {year}";
+            var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
+            try
+            {
+                var incomes = new List<Income>();
+                while (dataReader.Read())
+                {
+                    var income = new Income();
+                    income.Id = Convert.ToInt64(dataReader["Id"]);
+                    income.Description = dataReader["Description"].ToString();
+                    income.Price = Convert.ToDouble(dataReader["Price"]);
+                    income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
+                    income.Amount = Convert.ToDouble(dataReader["Amount"]);
+                    income.Percent = Convert.ToDouble(dataReader["Percent"]);
+                    income.Day = Convert.ToInt32(dataReader["Day"]);
+                    income.Month = Convert.ToInt32(dataReader["Month"]);
+                    income.Year = Convert.ToInt32(dataReader["Year"]);
                     incomes.Add(income);
                 }
 
@@ -80,7 +117,9 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.AddDate = dataReader["AddDate"].ToString();
+                    income.Day = Convert.ToInt32(dataReader["Day"]);
+                    income.Month = Convert.ToInt32(dataReader["Month"]);
+                    income.Year = Convert.ToInt32(dataReader["Year"]);
                 }
 
                 return income;
@@ -98,7 +137,8 @@ namespace Repository.Concrete.Operations
 
         public void Update(Income income)
         {
-            string commandText = "update income set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, AddDate = @AddDate where Id = @Id;";
+            string commandText = "update income set Description = @Description, Price =@Price, Quantity = @Quantity, " +
+                "Amount = @Amount, Percent = @Percent, Day = @Day, Month = @Month, Year = @Year where Id = @Id;";
             dbManager.Update(commandText, CommandType.Text, Param(income).ToArray());
         }
 
@@ -110,8 +150,10 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Price", income.Price, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Quantity", income.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", income.Amount, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@Percent", income.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@AddDate", 50, Convert.ToDateTime(income.AddDate), DbType.Date));
+            parameters.Add(dbManager.CreateParameter("@Percent", income.Percent, DbType.Double));           
+            parameters.Add(dbManager.CreateParameter("@Day", income.Day, DbType.Int32));
+            parameters.Add(dbManager.CreateParameter("@Month", income.Month, DbType.Int32));
+            parameters.Add(dbManager.CreateParameter("@Year", income.Year, DbType.Int32));
 
             return parameters;
         }

@@ -28,19 +28,9 @@ namespace UI
             MessageBox.Show("In developing");
         }
 
-        private void Left_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
-        private void Right_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void Calendar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            Calendar.Visibility = Visibility.Visible;
         }
 
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -50,12 +40,26 @@ namespace UI
 
         private void Income_Click(object sender, RoutedEventArgs e)
         {
-            Table.ItemsSource = windowLoaded.GetIncomes();            
+            if (CalendarText.Text == "ALL")
+            {
+                Table.ItemsSource = windowLoaded.GetIncomes();
+            }
+            else
+            {
+                Table.ItemsSource = windowLoaded.GetIncomes(Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
+            }
         }
 
         private void Expense_Click(object sender, RoutedEventArgs e)
         {
-            Table.ItemsSource = windowLoaded.GetExpenses();           
+            if (CalendarText.Text == "ALL")
+            {
+                Table.ItemsSource = windowLoaded.GetExpenses();
+            }
+            else
+            {
+                Table.ItemsSource = windowLoaded.GetExpenses(Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -103,6 +107,54 @@ namespace UI
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }           
+        }
+
+        private void Calendar_DisplayModeChanged(object sender, System.Windows.Controls.CalendarModeChangedEventArgs e)
+        {
+            if (Calendar.DisplayMode == System.Windows.Controls.CalendarMode.Month)
+            {
+                CalendarText.Text = GetMonthName(Calendar.DisplayDate.Month) + " " + Calendar.DisplayDate.Year;
+                Calendar.Visibility = Visibility.Collapsed;
+                Calendar.DisplayMode = System.Windows.Controls.CalendarMode.Year;
+            }
+        }
+
+        private string GetMonthName(int n)
+        {
+            switch (n)
+            {
+                case 1:
+                    return "January";
+                case 2:
+                    return "February";
+                case 3:
+                    return "March";
+                case 4:
+                    return "April";
+                case 5:
+                    return "May";
+                case 6:
+                    return "June";
+                case 7:
+                    return "July";
+                case 8:
+                    return "August";
+                case 9:
+                    return "September";
+                case 10:
+                    return "October";
+                case 11:
+                    return "November";
+                case 12:
+                    return "December";
+                default:
+                    return "Error";
+            }
+        }
+
+        private void CalendarAll_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CalendarText.Text = "ALL";
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Models.Entities;
 using Repository.Concrete.Operations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.DataBaseHelper
 {
@@ -28,7 +24,9 @@ namespace Service.DataBaseHelper
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
                     Percent = Convert.ToDouble(percent),
-                    AddDate = date
+                    Day = Convert.ToDateTime(date).Day,
+                    Month = Convert.ToDateTime(date).Month,
+                    Year = Convert.ToDateTime(date).Year
                 };
 
                 try
@@ -46,13 +44,15 @@ namespace Service.DataBaseHelper
                 expense = new ExpenseRepository();
                 Expense = new Expense()
                 {
-                    
+
                     Description = descr,
                     Price = Convert.ToDouble(price),
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
                     Percent = Convert.ToDouble(percent),
-                    AddDate = date
+                    Day = Convert.ToDateTime(date).Day,
+                    Month = Convert.ToDateTime(date).Month,
+                    Year = Convert.ToDateTime(date).Year
                 };
 
                 try
