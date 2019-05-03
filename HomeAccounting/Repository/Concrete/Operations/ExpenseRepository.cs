@@ -14,8 +14,8 @@ namespace Repository.Concrete.Operations
 
         public void Insert(Expense expense)
         {
-            string commandText = "insert into expense (Description, Price, Quantity, Amount, Percent, Date)" +
-                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @Date);";
+            string commandText = "insert into expense (Description, Price, Quantity, Amount, Percent, AddDate)" +
+                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @AddDate);";
             dbManager.Insert(commandText, CommandType.Text, Param(expense).ToArray());
         }
 
@@ -44,7 +44,7 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = dataReader["Date"].ToString();
+                    expense.Date = Convert.ToDateTime(dataReader["AddDate"]);
                     expenses.Add(expense);
                 }
 
@@ -79,7 +79,7 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = dataReader["Date"].ToString();
+                    expense.Date = Convert.ToDateTime(dataReader["AddDate"]);
                 }
 
                 return expense;
@@ -97,7 +97,7 @@ namespace Repository.Concrete.Operations
 
         public void Update(Expense expense)
         {
-            string commandText = "update expense set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, Date = @Date where Id = @Id;";
+            string commandText = "update expense set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, AddDate = @AddDate where Id = @Id;";
             dbManager.Update(commandText, CommandType.Text, Param(expense).ToArray());
         }
 
@@ -110,7 +110,7 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Quantity", expense.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", expense.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Percent", expense.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@Date", 50, expense.Date, DbType.String));
+            parameters.Add(dbManager.CreateParameter("@AddDate", 50, expense.Date, DbType.String));
 
             return parameters;
         }

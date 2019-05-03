@@ -15,8 +15,8 @@ namespace Repository.Concrete.Operations
 
         public void Insert(Income income)
         {
-            string commandText = "insert into income (Description, Price, Quantity, Amount, Percent, Date)" +
-                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @Date);";
+            string commandText = "insert into income (Description, Price, Quantity, Amount, Percent, AddDate)" +
+                 "values (@Description, @Price, @Quantity, @Amount, @Percent, @AddDate);";
             dbManager.Insert(commandText, CommandType.Text, Param(income).ToArray());
         }
 
@@ -45,7 +45,7 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.Date = dataReader["Date"].ToString();
+                    income.Date = Convert.ToDateTime(dataReader["AddDate"]);
                     incomes.Add(income);
                 }
 
@@ -80,7 +80,7 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.Date = dataReader["Date"].ToString();
+                    income.Date = Convert.ToDateTime(dataReader["AddDate"]);
                 }
 
                 return income;
@@ -98,7 +98,7 @@ namespace Repository.Concrete.Operations
 
         public void Update(Income income)
         {
-            string commandText = "update income set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, Date = @Date where Id = @Id;";
+            string commandText = "update income set Description = @Description, Price =@Price, Quantity = @Quantity, Amount = @Amount, Percent = @Percent, AddDate = @AddDate where Id = @Id;";
             dbManager.Update(commandText, CommandType.Text, Param(income).ToArray());
         }
 
@@ -111,7 +111,7 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Quantity", income.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", income.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Percent", income.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@Date", 50, income.Date, DbType.String));
+            parameters.Add(dbManager.CreateParameter("@AddDate", 50, income.Date, DbType.String));
 
             return parameters;
         }

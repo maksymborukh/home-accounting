@@ -1,4 +1,6 @@
-﻿namespace Models.Entities
+﻿using System;
+
+namespace Models.Entities
 {
     public class Expense
     {
@@ -8,6 +10,6 @@
         public int Quantity { get; set; }
         public double Amount { get; set; }
         public double Percent { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }

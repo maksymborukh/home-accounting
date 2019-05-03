@@ -10,9 +10,11 @@ namespace UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private WindowLoaded windowLoaded;
         public MainWindow()
         {      
-            InitializeComponent();            
+            InitializeComponent();
+            windowLoaded = new WindowLoaded();
         }
 
         private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -47,22 +49,18 @@ namespace UI
 
         private void Income_Click(object sender, RoutedEventArgs e)
         {
-            WindowLoaded windowLoaded = new WindowLoaded();
             Table.ItemsSource = windowLoaded.GetIncomes();            
         }
 
         private void Expense_Click(object sender, RoutedEventArgs e)
         {
-            WindowLoaded windowLoaded = new WindowLoaded();
-            Table.ItemsSource = windowLoaded.GetExpenses();
-            
+            Table.ItemsSource = windowLoaded.GetExpenses();           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //WindowLoaded windowLoaded = new WindowLoaded();
             //windowLoaded.GetIncomes();
-
         }
 
         private void OpenAddWindow_Click(object sender, RoutedEventArgs e)
