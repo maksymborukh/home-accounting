@@ -44,7 +44,7 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = Convert.ToDateTime(dataReader["AddDate"]);
+                    expense.AddDate = dataReader["AddDate"].ToString();
                     expenses.Add(expense);
                 }
 
@@ -79,7 +79,7 @@ namespace Repository.Concrete.Operations
                     expense.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     expense.Amount = Convert.ToDouble(dataReader["Amount"]);
                     expense.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    expense.Date = Convert.ToDateTime(dataReader["AddDate"]);
+                    expense.AddDate = dataReader["AddDate"].ToString();
                 }
 
                 return expense;
@@ -110,7 +110,7 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Quantity", expense.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", expense.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Percent", expense.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@AddDate", 50, expense.Date, DbType.String));
+            parameters.Add(dbManager.CreateParameter("@AddDate", 50, Convert.ToDateTime(expense.AddDate), DbType.Date));
 
             return parameters;
         }

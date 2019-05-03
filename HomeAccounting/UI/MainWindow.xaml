@@ -41,14 +41,14 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.1*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding Path=Description}" FontSize="14" Grid.Column="0"/>
                     <TextBlock Text="{Binding Path=Price}" FontSize="14" Grid.Column="1"/>
                     <TextBlock Text="{Binding Path=Quantity}" FontSize="14" Grid.Column="2"/>
                     <TextBlock Text="{Binding Path=Amount}" FontSize="14" Grid.Column="3"/>
                     <TextBlock Text="{Binding Path=Percent}" FontSize="14" Grid.Column="4"/>
-                    <TextBlock Text="{Binding Path=Date}" FontSize="14" Grid.Column="5"/>
+                    <TextBlock Text="{Binding Path=AddDate}" FontSize="14" Grid.Column="5"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -176,7 +176,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1.2*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Description" FontSize="14" Grid.Column="0"/>
                                 <TextBlock Text="Price" FontSize="14" Grid.Column="1"/>
@@ -205,7 +205,7 @@
         </Grid>
 
         <Border x:Name="AddWindow" Height="280" Width="300" Background="White" 
-                BorderBrush="Black" BorderThickness="1">
+                BorderBrush="Black" BorderThickness="1" Visibility="Collapsed">
             <Grid>
 
                 <Grid Height="30" VerticalAlignment="Top" Margin="0,5,0,0">
@@ -275,7 +275,7 @@
                         <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Content="Save" Grid.Column="1"/>
+                    <Button Content="Save" Click="SaveInput_Click" Grid.Column="1"/>
                     <Button Content="Cancel" Click="CloseAddWindow_Click" Grid.Column="3"/>
                 </Grid>
             </Grid>

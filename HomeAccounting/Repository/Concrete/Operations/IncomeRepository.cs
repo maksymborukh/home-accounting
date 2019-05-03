@@ -45,7 +45,7 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.Date = Convert.ToDateTime(dataReader["AddDate"]);
+                    income.AddDate = dataReader["AddDate"].ToString();
                     incomes.Add(income);
                 }
 
@@ -80,7 +80,7 @@ namespace Repository.Concrete.Operations
                     income.Quantity = Convert.ToInt32(dataReader["Quantity"]);
                     income.Amount = Convert.ToDouble(dataReader["Amount"]);
                     income.Percent = Convert.ToDouble(dataReader["Percent"]);
-                    income.Date = Convert.ToDateTime(dataReader["AddDate"]);
+                    income.AddDate = dataReader["AddDate"].ToString();
                 }
 
                 return income;
@@ -111,7 +111,7 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Quantity", income.Quantity, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Amount", income.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Percent", income.Percent, DbType.Double));
-            parameters.Add(dbManager.CreateParameter("@AddDate", 50, income.Date, DbType.String));
+            parameters.Add(dbManager.CreateParameter("@AddDate", 50, Convert.ToDateTime(income.AddDate), DbType.Date));
 
             return parameters;
         }

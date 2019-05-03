@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBaseHelper\TransferToDB.cs" />
     <Compile Include="WindonLoaded.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

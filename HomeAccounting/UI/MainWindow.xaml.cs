@@ -1,4 +1,5 @@
 ﻿using Service;
+using Service.DataBaseHelper;
 using System.Windows;
 using System.Windows.Input;
 
@@ -71,6 +72,37 @@ namespace UI
         private void CloseAddWindow_Click(object sender, RoutedEventArgs e)
         {
             AddWindow.Visibility = Visibility.Collapsed;
+        }
+
+        private void SaveInput_Click(object sender, RoutedEventArgs e)
+        {
+            if (IncomeRadioButton.IsChecked == true)
+            {
+                TransferToDB transferToDB = new TransferToDB();
+                if (!transferToDB.Save("income", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
+                    AmountInput.Text, PercentInput.Text, DateInput.Text))
+                {
+                    MessageBox.Show("Error. Try again later.");
+                }
+                else
+                {
+                    MessageBox.Show("Added.");
+                    AddWindow.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                TransferToDB transferToDB = new TransferToDB();
+                if (!transferToDB.Save("expense", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
+                    AmountInput.Text, PercentInput.Text, DateInput.Text))
+                {
+                    MessageBox.Show("Added.");
+                }
+                else
+                {
+                    AddWindow.Visibility = Visibility.Collapsed;
+                }
+            }           
         }
     }
 }
