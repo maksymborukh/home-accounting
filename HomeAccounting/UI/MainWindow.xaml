@@ -7,6 +7,7 @@
         xmlns:Date="clr-namespace:UI.Date"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"        
         xmlns:Collections="clr-namespace:Models.Collections;assembly=Models"
+        xmlns:M="clr-namespace:Service;assembly=Service"
         mc:Ignorable="d"
         Title="Finance" 
         Height="550" Width="800"
@@ -15,11 +16,11 @@
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize"
         Loaded="Window_Loaded">
-    <Window.DataContext>
-        <Date:Date/>
-    </Window.DataContext>
 
     <Window.Resources>
+
+        <Date:Date x:Key="Time"/>
+        
         <!-- provider for getting data -->
         <ObjectDataProvider x:Key="IncomeProvider"
                 ObjectType="{x:Type Collections:IncomeCollections}" MethodName="GetIncomes" />
@@ -61,7 +62,7 @@
         </DataTemplate>
 
     </Window.Resources>
-    
+
     <Grid>
 
         <Grid>
@@ -124,27 +125,19 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- content -->
-
-                <!-- payments -->
-                <StackPanel Height="90" VerticalAlignment="Top">
-                    <Button Content="Cash" FontSize="16" Cursor="Hand" Margin="0,0,0,0" />
-                    <Button Content="Master Card" FontSize="16" Cursor="Hand" Margin="0,5,0,0" />
-                    <Button Content="Visa" FontSize="16" Cursor="Hand" Margin="0,5,0,0" />
-                </StackPanel>
-
                 <!-- payments info -->
-                <StackPanel Margin="0,90,0,0">
+                <StackPanel Margin="0,0,0,0">
                     <TextBlock Text="Income" FontSize="16" Margin="5,0,0,0"/>
-                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+                    <TextBlock x:Name="IncomeSide" Text="0" FontSize="16" Margin="25,0,0,5"/>
 
                     <TextBlock Text="Expenses" FontSize="16" Margin="5,0,0,0"/>
-                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+                    <TextBlock x:Name="ExpenseSide" Text="0" FontSize="16" Margin="25,0,0,5"/>
 
                     <TextBlock Text="Currency" FontSize="16" Margin="5,0,0,0"/>
-                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+                    <TextBlock x:Name="CurrencySide" Text="-" FontSize="16" Margin="25,0,0,5"/>
 
                     <TextBlock Text="Balance" FontSize="16" Margin="5,0,0,0"/>
-                    <TextBlock Text="am" FontSize="16" Margin="25,0,0,5"/>
+                    <TextBlock x:Name="BalanceSide" Text="0" FontSize="16" Margin="25,0,0,5"/>
                 </StackPanel>
 
                 <!-- main info -->
@@ -157,7 +150,6 @@
 
                         <StackPanel Grid.Column="1" Margin="0,0,5,0">
                             <Button Content="Add" Click="OpenAddWindow_Click" FontSize="16" Margin="0,0,0,5"/>
-                            <Button Content="Delete" FontSize="16"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="0">
@@ -197,7 +189,7 @@
             
             <!-- current date -->
             <WrapPanel Grid.Row="6">
-                <TextBlock Text="{Binding date}" FontSize="16" Margin="10,0"/>
+                <TextBlock Text="{Binding Source={StaticResource Time}, Path=date}" FontSize="16" Margin="10,0"/>
             </WrapPanel>
         </Grid>
 

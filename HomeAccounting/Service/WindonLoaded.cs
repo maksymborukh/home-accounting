@@ -50,5 +50,19 @@ namespace Service
 
             return expenseCollections.GetExpenses();
         }
+
+        public void FillSide(Money money)
+        {
+            List<Expense> exp = new List<Expense>(expense.GetAll());
+            List<Income> inc = new List<Income>(income.GetAll());
+            money.Calc(inc, exp);
+        }
+
+        public void FillSide(Money money, int month, int year)
+        {
+            List<Expense> exp = new List<Expense>(expense.GetByFilter(month, year));
+            List<Income> inc = new List<Income>(income.GetByFilter(month, year));
+            money.Calc(inc, exp);
+        }
     }
 }
