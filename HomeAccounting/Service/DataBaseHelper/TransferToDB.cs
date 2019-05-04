@@ -66,5 +66,39 @@ namespace Service.DataBaseHelper
                 }
             }
         }
+
+        public bool Del(Income i, Expense e)
+        {
+            if (i != null)
+            {
+                income = new IncomeRepository();
+                try
+                {
+                    income.Delete(i.Id);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else if(e != null)
+            {
+                expense = new ExpenseRepository();
+                try
+                {
+                    expense.Delete(e.Id);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

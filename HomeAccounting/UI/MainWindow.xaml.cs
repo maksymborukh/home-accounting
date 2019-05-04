@@ -1,8 +1,8 @@
-﻿using Service;
+﻿using Models.Entities;
+using Service;
 using Service.DataBaseHelper;
 using System.Windows;
 using System.Windows.Input;
-
 
 namespace UI
 {
@@ -12,10 +12,14 @@ namespace UI
     public partial class MainWindow : Window
     {
         private WindowLoaded windowLoaded;
+        private Money Money;
+        private bool Inc = true;
+        private bool Exp = false;
         public MainWindow()
         {      
             InitializeComponent();
             windowLoaded = new WindowLoaded();
+            Money = new Money();
         }
 
         private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -35,7 +39,39 @@ namespace UI
 
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-
+            if (Table.SelectedItem != null && MessageBox.Show("Delete?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                if (Inc)
+                {
+                    Income income = (Income)Table.SelectedItems[0];
+                    TransferToDB transferToDB = new TransferToDB();
+                    if (transferToDB.Del(income, null))
+                    {
+                        MessageBox.Show("Deleted.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error. Try again later.");
+                    }
+                }   
+                else if (Exp)
+                {
+                    Expense expense = (Expense)Table.SelectedItems[0];
+                    TransferToDB transferToDB = new TransferToDB();
+                    if (transferToDB.Del(null, expense))
+                    {
+                        MessageBox.Show("Deleted.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error. Try again later.");
+                    }
+                }
+            }
+            else
+            {
+                Table.SelectedItem = null;
+            }
         }
 
         private void Income_Click(object sender, RoutedEventArgs e)
@@ -43,11 +79,19 @@ namespace UI
             if (CalendarText.Text == "ALL")
             {
                 Table.ItemsSource = windowLoaded.GetIncomes();
+                windowLoaded.FillSide(Money);
             }
             else
             {
                 Table.ItemsSource = windowLoaded.GetIncomes(Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
+                windowLoaded.FillSide(Money, Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
             }
+            IncomeSide.Text = Money.income;
+            ExpenseSide.Text = Money.expense;
+            CurrencySide.Text = Money.currency;
+            BalanceSide.Text = Money.balance;
+            Inc = true;
+            Exp = false;
         }
 
         private void Expense_Click(object sender, RoutedEventArgs e)
@@ -55,17 +99,36 @@ namespace UI
             if (CalendarText.Text == "ALL")
             {
                 Table.ItemsSource = windowLoaded.GetExpenses();
+                windowLoaded.FillSide(Money);
             }
             else
             {
                 Table.ItemsSource = windowLoaded.GetExpenses(Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
+                windowLoaded.FillSide(Money, Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
             }
+            IncomeSide.Text = Money.income;
+            ExpenseSide.Text = Money.expense;
+            CurrencySide.Text = Money.currency;
+            BalanceSide.Text = Money.balance;
+            Inc = false;
+            Exp = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //WindowLoaded windowLoaded = new WindowLoaded();
-            //windowLoaded.GetIncomes();
+            if (CalendarText.Text == "ALL")
+            {
+                windowLoaded.FillSide(Money);
+                Table.ItemsSource = windowLoaded.GetIncomes();
+            }
+            else
+            {
+                windowLoaded.FillSide(Money, Calendar.DisplayDate.Month, Calendar.DisplayDate.Year);
+            }
+            IncomeSide.Text = Money.income;
+            ExpenseSide.Text = Money.expense;
+            CurrencySide.Text = Money.currency;
+            BalanceSide.Text = Money.balance;
         }
 
         private void OpenAddWindow_Click(object sender, RoutedEventArgs e)
@@ -156,5 +219,6 @@ namespace UI
         {
             CalendarText.Text = "ALL";
         }
+
     }
 }
