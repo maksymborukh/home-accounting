@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseHelper\TransferToDB.cs" />
+    <Compile Include="Logic\Amount.cs" />
     <Compile Include="Logic\Percent.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="WindonLoaded.cs" />

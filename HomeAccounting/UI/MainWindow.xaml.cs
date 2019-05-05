@@ -1,6 +1,8 @@
 ﻿using Models.Entities;
 using Service;
 using Service.DataBaseHelper;
+using Service.Logic;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -153,7 +155,7 @@ namespace UI
             if (IncomeRadioButton.IsChecked == true)
             {
                 TransferToDB transferToDB = new TransferToDB();
-                if (!transferToDB.Save("income", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
+                if (!transferToDB.Save("income", DescriptionInput.Text, "0", "0",
                     AmountInput.Text, DateInput.Text))
                 {
                     MessageBox.Show("Error. Try again later.");
@@ -166,14 +168,17 @@ namespace UI
             }
             else if(ExpenseRadioButton.IsChecked == true)
             {
+                Amount Amount = new Amount();
+                string amount = Amount.CalcAmount(Convert.ToDouble(PriceInput.Text), Convert.ToInt32(QuantityInput.Text)).ToString();
                 TransferToDB transferToDB = new TransferToDB();
                 if (!transferToDB.Save("expense", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
-                    AmountInput.Text, DateInput.Text))
+                    amount, DateInput.Text))
                 {
-                    MessageBox.Show("Added.");
+                    MessageBox.Show("Error. Try again later");
                 }
                 else
                 {
+                    MessageBox.Show("Added.");
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }

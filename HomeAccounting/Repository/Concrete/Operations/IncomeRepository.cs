@@ -3,7 +3,6 @@ using Repository.Abstract;
 using Repository.Core;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 
 namespace Repository.Concrete.Operations
@@ -146,7 +145,7 @@ namespace Repository.Concrete.Operations
             parameters.Add(dbManager.CreateParameter("@Description", 50, income.Description, DbType.String));
             parameters.Add(dbManager.CreateParameter("@Price", income.Price, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Quantity", income.Quantity, DbType.Int32));
-            parameters.Add(dbManager.CreateParameter("@Amount", income.Amount, DbType.Double));           
+            parameters.Add(dbManager.CreateParameter("@Amount", income.Amount, DbType.Double));
             parameters.Add(dbManager.CreateParameter("@Day", income.Day, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Month", income.Month, DbType.Int32));
             parameters.Add(dbManager.CreateParameter("@Year", income.Year, DbType.Int32));
