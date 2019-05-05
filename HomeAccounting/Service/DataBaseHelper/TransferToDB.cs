@@ -12,7 +12,7 @@ namespace Service.DataBaseHelper
         public IncomeRepository income;
         public ExpenseRepository expense;
 
-        public bool Save(string type, string descr, string price, string quantity, string amount, string percent, string date)
+        public bool Save(string type, string descr, string price, string quantity, string amount, string date)
         {
             if (type.Equals("income"))
             {
@@ -23,7 +23,6 @@ namespace Service.DataBaseHelper
                     Price = Convert.ToDouble(price),
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
-                    Percent = Convert.ToDouble(percent),
                     Day = Convert.ToDateTime(date).Day,
                     Month = Convert.ToDateTime(date).Month,
                     Year = Convert.ToDateTime(date).Year
@@ -49,7 +48,6 @@ namespace Service.DataBaseHelper
                     Price = Convert.ToDouble(price),
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
-                    Percent = Convert.ToDouble(percent),
                     Day = Convert.ToDateTime(date).Day,
                     Month = Convert.ToDateTime(date).Month,
                     Year = Convert.ToDateTime(date).Year

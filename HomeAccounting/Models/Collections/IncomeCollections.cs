@@ -22,8 +22,7 @@ namespace Models.Collections
         }
 
         public ObservableCollection<Income> GetIncomes()
-        {
-            
+        {           
             return incomes;
         }
     }

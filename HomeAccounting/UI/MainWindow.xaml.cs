@@ -134,11 +134,18 @@ namespace UI
         private void OpenAddWindow_Click(object sender, RoutedEventArgs e)
         {
             AddWindow.Visibility = Visibility.Visible;
+            DescriptionInput.IsEnabled = false;
+            AmountInput.IsEnabled = false;
+            DateInput.IsEnabled = false;
+            PriceInput.IsEnabled = false;
+            QuantityInput.IsEnabled = false;
         }
 
         private void CloseAddWindow_Click(object sender, RoutedEventArgs e)
         {
             AddWindow.Visibility = Visibility.Collapsed;
+            IncomeRadioButton.IsChecked = false;
+            ExpenseRadioButton.IsChecked = false;
         }
 
         private void SaveInput_Click(object sender, RoutedEventArgs e)
@@ -147,7 +154,7 @@ namespace UI
             {
                 TransferToDB transferToDB = new TransferToDB();
                 if (!transferToDB.Save("income", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
-                    AmountInput.Text, PercentInput.Text, DateInput.Text))
+                    AmountInput.Text, DateInput.Text))
                 {
                     MessageBox.Show("Error. Try again later.");
                 }
@@ -157,11 +164,11 @@ namespace UI
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }
-            else
+            else if(ExpenseRadioButton.IsChecked == true)
             {
                 TransferToDB transferToDB = new TransferToDB();
                 if (!transferToDB.Save("expense", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
-                    AmountInput.Text, PercentInput.Text, DateInput.Text))
+                    AmountInput.Text, DateInput.Text))
                 {
                     MessageBox.Show("Added.");
                 }
@@ -169,7 +176,11 @@ namespace UI
                 {
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
-            }           
+            }
+            else
+            {
+                MessageBox.Show("Choose one!");
+            }
         }
 
         private void Calendar_DisplayModeChanged(object sender, System.Windows.Controls.CalendarModeChangedEventArgs e)
@@ -220,5 +231,22 @@ namespace UI
             CalendarText.Text = "ALL";
         }
 
+        private void IncomeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            DescriptionInput.IsEnabled = true;
+            AmountInput.IsEnabled = true;
+            DateInput.IsEnabled = true;
+            PriceInput.IsEnabled = false;
+            QuantityInput.IsEnabled = false;
+        }
+
+        private void ExpenseRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            DescriptionInput.IsEnabled = true;
+            AmountInput.IsEnabled = false;
+            DateInput.IsEnabled = true;
+            PriceInput.IsEnabled = true;
+            QuantityInput.IsEnabled = true;
+        }
     }
 }

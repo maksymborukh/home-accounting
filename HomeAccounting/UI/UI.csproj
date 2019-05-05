@@ -158,7 +158,7 @@
       <Name>Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{2B06B1F0-C9C6-4125-B10E-F65F05346174}</Project>
+      <Project>{2b06b1f0-c9c6-4125-b10e-f65f05346174}</Project>
       <Name>Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service\Service.csproj">
