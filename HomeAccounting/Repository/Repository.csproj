@@ -42,11 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IExpenseRepository.cs" />
-    <Compile Include="Abstract\IIncomeRepository.cs" />
     <Compile Include="Abstract\IRepository.cs" />
+    <Compile Include="Concrete\Operations\ExpenseFile.cs" />
+    <Compile Include="Concrete\Operations\IncomeFile.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="WindowLoaded.cs" />
     <Compile Include="Concrete\Operations\ExpenseRepository.cs" />
     <Compile Include="Concrete\Operations\IncomeRepository.cs" />
     <Compile Include="Core\ConfigurationSetting.cs" />

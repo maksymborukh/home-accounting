@@ -13,6 +13,10 @@ namespace Repository
                     return new IncomeRepository();
                 case "expensedb":
                     return new ExpenseRepository();
+                case "incomef":
+                    return new IncomeFile();
+                case "expensef":
+                    return new ExpenseFile();
                 default:
                     return null;
             }

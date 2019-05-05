@@ -1,4 +1,5 @@
-﻿using Models.Entities;
+﻿// version 1.0
+using Models.Entities;
 using Service;
 using Service.DataBaseHelper;
 using Service.Logic;
@@ -256,6 +257,34 @@ namespace UI
             DateInput.IsEnabled = true;
             PriceInput.IsEnabled = true;
             QuantityInput.IsEnabled = true;
+        }
+
+        private void Setting_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Setting.Visibility = Visibility.Visible;
+        }
+
+        private void CloseSetting_Click(object sender, RoutedEventArgs e)
+        {
+            Setting.Visibility = Visibility.Collapsed;
+        }
+
+        private void SaveSetting_Click(object sender, RoutedEventArgs e)
+        {
+            if (DatabaseRadioButton.IsChecked == true)
+            {
+                dbOrFile.Type = "db";
+                Setting.Visibility = Visibility.Collapsed;
+            }
+            else if (FileRadioButton.IsChecked == true)
+            {
+                dbOrFile.Type = "f";
+                Setting.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MessageBox.Show("Choose one!");
+            }
         }
     }
 }
