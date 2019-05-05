@@ -1,7 +1,6 @@
 ﻿using Models.Collections;
 using Models.Entities;
 using Repository;
-using Repository.Concrete.Operations;
 using Service.Logic;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace Service
     {
         public ObservableCollection<Income> GetIncomes()
         {
-            var dbType = Factory.GetFactory("incomedb");
+            var dbType = Factory.GetFactory("incomef");
             List<Income> inc = new List<Income>();
             List<object> list = new List<object>(dbType.GetAll());
             foreach (var o in list)
@@ -21,13 +20,13 @@ namespace Service
                 inc.Add((Income)o);
             }
             List<Income> incomes = new List<Income>();
-            IncomeCollections incomeCollections = new IncomeCollections();           
+            IncomeCollections incomeCollections = new IncomeCollections();
             Percent percent = new Percent();
 
             foreach (var income in inc)
             {
                 income.Percent = Math.Round(percent.CalcPercent(income.Amount, inc), 3);
-                incomes.Add(income);                  
+                incomes.Add(income);
             }
 
             incomeCollections.Add(incomes);
@@ -37,7 +36,7 @@ namespace Service
 
         public ObservableCollection<Income> GetIncomes(int month, int year)
         {
-            var dbType = Factory.GetFactory("incomedb");
+            var dbType = Factory.GetFactory("incomef");
             List<Income> inc = new List<Income>();
             List<object> list = new List<object>(dbType.GetByFilter(month, year));
             foreach (var o in list)
@@ -61,7 +60,7 @@ namespace Service
 
         public ObservableCollection<Expense> GetExpenses()
         {
-            var dbType = Factory.GetFactory("expensedb");
+            var dbType = Factory.GetFactory("expensef");
             List<Expense> exp = new List<Expense>();
             List<object> list = new List<object>(dbType.GetAll());
             foreach (var o in list)
@@ -85,7 +84,7 @@ namespace Service
 
         public ObservableCollection<Expense> GetExpenses(int month, int year)
         {
-            var dbType = Factory.GetFactory("expensedb");
+            var dbType = Factory.GetFactory("expensef");
             List<Expense> exp = new List<Expense>();
             List<object> list = new List<object>(dbType.GetByFilter(month, year));
             foreach (var o in list)
@@ -109,14 +108,14 @@ namespace Service
 
         public void FillSide(Money money)
         {
-            var dbType = Factory.GetFactory("expensedb");
+            var dbType = Factory.GetFactory("expensef");
             List<Expense> exp = new List<Expense>();
             List<object> list = new List<object>(dbType.GetAll());
             foreach (var o in list)
             {
                 exp.Add((Expense)o);
             }
-            var dbType2 = Factory.GetFactory("incomedb");
+            var dbType2 = Factory.GetFactory("incomef");
             List<Income> inc = new List<Income>();
             List<object> list2 = new List<object>(dbType2.GetAll());
             foreach (var o in list2)
@@ -128,14 +127,14 @@ namespace Service
 
         public void FillSide(Money money, int month, int year)
         {
-            var dbType = Factory.GetFactory("expensedb");
+            var dbType = Factory.GetFactory("expensef");
             List<Expense> exp = new List<Expense>();
             List<object> list = new List<object>(dbType.GetByFilter(month, year));
             foreach (var o in list)
             {
                 exp.Add((Expense)o);
             }
-            var dbType2 = Factory.GetFactory("incomedb");
+            var dbType2 = Factory.GetFactory("incomef");
             List<Income> inc = new List<Income>();
             List<object> list2 = new List<object>(dbType2.GetByFilter(month, year));
             foreach (var o in list2)

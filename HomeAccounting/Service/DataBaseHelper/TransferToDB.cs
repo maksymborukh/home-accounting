@@ -13,7 +13,7 @@ namespace Service.DataBaseHelper
         {
             if (type.Equals("income"))
             {
-                var dbType = Factory.GetFactory("incomedb");
+                var dbType = Factory.GetFactory("incomef");
                 Income = new Income()
                 {
                     Description = descr,
@@ -37,7 +37,7 @@ namespace Service.DataBaseHelper
             }
             else
             {
-                var dbType = Factory.GetFactory("expensedb");
+                var dbType = Factory.GetFactory("expensef");
                 Expense = new Expense()
                 {
 
@@ -66,7 +66,7 @@ namespace Service.DataBaseHelper
         {
             if (i != null)
             {
-                var dbType = Factory.GetFactory("incomedb");
+                var dbType = Factory.GetFactory("incomef");
                 try
                 {
                     dbType.Delete(i.Id);
@@ -79,7 +79,7 @@ namespace Service.DataBaseHelper
             }
             else if (e != null)
             {
-                var dbType = Factory.GetFactory("expensedb");
+                var dbType = Factory.GetFactory("expensef");
                 try
                 {
                     dbType.Delete(e.Id);
