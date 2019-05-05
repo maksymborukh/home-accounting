@@ -1,6 +1,9 @@
 ﻿using Models.Collections;
 using Models.Entities;
+using Repository;
 using Repository.Concrete.Operations;
+using Service.Logic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -8,60 +11,137 @@ namespace Service
 {
     public class WindowLoaded
     {
-        public IncomeRepository income = new IncomeRepository();
-        public ExpenseRepository expense = new ExpenseRepository();
-
         public ObservableCollection<Income> GetIncomes()
         {
+            var dbType = Factory.GetFactory("incomedb");
+            List<Income> inc = new List<Income>();
+            List<object> list = new List<object>(dbType.GetAll());
+            foreach (var o in list)
+            {
+                inc.Add((Income)o);
+            }
+            List<Income> incomes = new List<Income>();
+            IncomeCollections incomeCollections = new IncomeCollections();           
+            Percent percent = new Percent();
 
-            List<Income> inc = new List<Income>(income.GetAll());
-            IncomeCollections incomeCollections = new IncomeCollections();
-            incomeCollections.Add(inc);
+            foreach (var income in inc)
+            {
+                income.Percent = Math.Round(percent.CalcPercent(income.Amount, inc), 3);
+                incomes.Add(income);                  
+            }
+
+            incomeCollections.Add(incomes);
 
             return incomeCollections.GetIncomes();
         }
 
         public ObservableCollection<Income> GetIncomes(int month, int year)
         {
-
-            List<Income> inc = new List<Income>(income.GetByFilter(month, year));
+            var dbType = Factory.GetFactory("incomedb");
+            List<Income> inc = new List<Income>();
+            List<object> list = new List<object>(dbType.GetByFilter(month, year));
+            foreach (var o in list)
+            {
+                inc.Add((Income)o);
+            }
+            List<Income> incomes = new List<Income>();
             IncomeCollections incomeCollections = new IncomeCollections();
-            incomeCollections.Add(inc);
+            Percent percent = new Percent();
+
+            foreach (var income in inc)
+            {
+                income.Percent = Math.Round(percent.CalcPercent(income.Amount, inc), 3);
+                incomes.Add(income);
+            }
+
+            incomeCollections.Add(incomes);
 
             return incomeCollections.GetIncomes();
         }
 
         public ObservableCollection<Expense> GetExpenses()
         {
-
-            List<Expense> exp = new List<Expense>(expense.GetAll());
+            var dbType = Factory.GetFactory("expensedb");
+            List<Expense> exp = new List<Expense>();
+            List<object> list = new List<object>(dbType.GetAll());
+            foreach (var o in list)
+            {
+                exp.Add((Expense)o);
+            }
+            List<Expense> expenses = new List<Expense>();
             ExpenseCollections expenseCollections = new ExpenseCollections();
-            expenseCollections.Add(exp);
+            Percent percent = new Percent();
+
+            foreach (var expense in exp)
+            {
+                expense.Percent = Math.Round(percent.CalcPercent(expense.Amount, exp), 3);
+                expenses.Add(expense);
+            }
+
+            expenseCollections.Add(expenses);
 
             return expenseCollections.GetExpenses();
         }
 
         public ObservableCollection<Expense> GetExpenses(int month, int year)
         {
-
-            List<Expense> exp = new List<Expense>(expense.GetByFilter(month, year));
+            var dbType = Factory.GetFactory("expensedb");
+            List<Expense> exp = new List<Expense>();
+            List<object> list = new List<object>(dbType.GetByFilter(month, year));
+            foreach (var o in list)
+            {
+                exp.Add((Expense)o);
+            }
+            List<Expense> expenses = new List<Expense>();
             ExpenseCollections expenseCollections = new ExpenseCollections();
-            expenseCollections.Add(exp);
+            Percent percent = new Percent();
+
+            foreach (var expense in exp)
+            {
+                expense.Percent = Math.Round(percent.CalcPercent(expense.Amount, exp), 3);
+                expenses.Add(expense);
+            }
+
+            expenseCollections.Add(expenses);
 
             return expenseCollections.GetExpenses();
         }
 
         public void FillSide(Money money)
         {
-            List<Expense> exp = new List<Expense>(expense.GetAll());
-            List<Income> inc = new List<Income>(income.GetAll());
+            var dbType = Factory.GetFactory("expensedb");
+            List<Expense> exp = new List<Expense>();
+            List<object> list = new List<object>(dbType.GetAll());
+            foreach (var o in list)
+            {
+                exp.Add((Expense)o);
+            }
+            var dbType2 = Factory.GetFactory("incomedb");
+            List<Income> inc = new List<Income>();
+            List<object> list2 = new List<object>(dbType2.GetAll());
+            foreach (var o in list2)
+            {
+                inc.Add((Income)o);
+            }
             money.Calc(inc, exp);
         }
 
         public void FillSide(Money money, int month, int year)
         {
-            List<Expense> exp = new List<Expense>(expense.GetByFilter(month, year));
-            List<Income> inc = new List<Income>(income.GetByFilter(month, year));
+            var dbType = Factory.GetFactory("expensedb");
+            List<Expense> exp = new List<Expense>();
+            List<object> list = new List<object>(dbType.GetByFilter(month, year));
+            foreach (var o in list)
+            {
+                exp.Add((Expense)o);
+            }
+            var dbType2 = Factory.GetFactory("incomedb");
+            List<Income> inc = new List<Income>();
+            List<object> list2 = new List<object>(dbType2.GetByFilter(month, year));
+            foreach (var o in list2)
+            {
+                inc.Add((Income)o);
+            }
             money.Calc(inc, exp);
         }
     }

@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Abstract\IExpenseRepository.cs" />
     <Compile Include="Abstract\IIncomeRepository.cs" />
+    <Compile Include="Abstract\IRepository.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="WindowLoaded.cs" />
     <Compile Include="Concrete\Operations\ExpenseRepository.cs" />
     <Compile Include="Concrete\Operations\IncomeRepository.cs" />
@@ -53,7 +55,9 @@
     <Compile Include="Core\ProviderManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{e4fcd108-b729-4ae7-a5a1-9fa90a62b64a}</Project>

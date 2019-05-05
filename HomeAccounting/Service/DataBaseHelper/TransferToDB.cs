@@ -1,5 +1,5 @@
 ﻿using Models.Entities;
-using Repository.Concrete.Operations;
+using Repository;
 using System;
 
 namespace Service.DataBaseHelper
@@ -8,22 +8,18 @@ namespace Service.DataBaseHelper
     {
         private Expense Expense;
         private Income Income;
-
-        public IncomeRepository income;
-        public ExpenseRepository expense;
-
-        public bool Save(string type, string descr, string price, string quantity, string amount, string percent, string date)
+      
+        public bool Save(string type, string descr, string price, string quantity, string amount, string date)
         {
             if (type.Equals("income"))
             {
-                income = new IncomeRepository();
+                var dbType = Factory.GetFactory("incomedb");
                 Income = new Income()
                 {
                     Description = descr,
                     Price = Convert.ToDouble(price),
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
-                    Percent = Convert.ToDouble(percent),
                     Day = Convert.ToDateTime(date).Day,
                     Month = Convert.ToDateTime(date).Month,
                     Year = Convert.ToDateTime(date).Year
@@ -31,7 +27,7 @@ namespace Service.DataBaseHelper
 
                 try
                 {
-                    income.Insert(Income);
+                    dbType.Insert(Income);
                     return true;
                 }
                 catch
@@ -41,7 +37,7 @@ namespace Service.DataBaseHelper
             }
             else
             {
-                expense = new ExpenseRepository();
+                var dbType = Factory.GetFactory("expensedb");
                 Expense = new Expense()
                 {
 
@@ -49,7 +45,6 @@ namespace Service.DataBaseHelper
                     Price = Convert.ToDouble(price),
                     Quantity = Convert.ToInt32(quantity),
                     Amount = Convert.ToDouble(amount),
-                    Percent = Convert.ToDouble(percent),
                     Day = Convert.ToDateTime(date).Day,
                     Month = Convert.ToDateTime(date).Month,
                     Year = Convert.ToDateTime(date).Year
@@ -57,7 +52,7 @@ namespace Service.DataBaseHelper
 
                 try
                 {
-                    expense.Insert(Expense);
+                    dbType.Insert(Expense);
                     return true;
                 }
                 catch
@@ -71,10 +66,10 @@ namespace Service.DataBaseHelper
         {
             if (i != null)
             {
-                income = new IncomeRepository();
+                var dbType = Factory.GetFactory("incomedb");
                 try
                 {
-                    income.Delete(i.Id);
+                    dbType.Delete(i.Id);
                     return true;
                 }
                 catch
@@ -82,12 +77,12 @@ namespace Service.DataBaseHelper
                     return false;
                 }
             }
-            else if(e != null)
+            else if (e != null)
             {
-                expense = new ExpenseRepository();
+                var dbType = Factory.GetFactory("expensedb");
                 try
                 {
-                    expense.Delete(e.Id);
+                    dbType.Delete(e.Id);
                     return true;
                 }
                 catch

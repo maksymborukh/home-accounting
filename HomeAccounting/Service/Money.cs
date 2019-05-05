@@ -16,17 +16,17 @@ namespace Service
             double exp = 0;
             foreach (var i in incomes)
             {
-                inc = inc + i.Price * i.Quantity;
+                inc = inc + i.Amount;
             }
             income = inc.ToString();
 
             foreach (var e in expenses)
             {
-                exp = exp + e.Price * e.Quantity;
+                exp = exp + e.Amount;
             }
             expense = exp.ToString();
             currency = "ukrainian hryvnia";
             balance = (inc - exp).ToString();
         }
-    }//todo mast calculate by amount
+    }
 }

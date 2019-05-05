@@ -1,6 +1,8 @@
 ﻿using Models.Entities;
 using Service;
 using Service.DataBaseHelper;
+using Service.Logic;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -134,11 +136,18 @@ namespace UI
         private void OpenAddWindow_Click(object sender, RoutedEventArgs e)
         {
             AddWindow.Visibility = Visibility.Visible;
+            DescriptionInput.IsEnabled = false;
+            AmountInput.IsEnabled = false;
+            DateInput.IsEnabled = false;
+            PriceInput.IsEnabled = false;
+            QuantityInput.IsEnabled = false;
         }
 
         private void CloseAddWindow_Click(object sender, RoutedEventArgs e)
         {
             AddWindow.Visibility = Visibility.Collapsed;
+            IncomeRadioButton.IsChecked = false;
+            ExpenseRadioButton.IsChecked = false;
         }
 
         private void SaveInput_Click(object sender, RoutedEventArgs e)
@@ -146,30 +155,41 @@ namespace UI
             if (IncomeRadioButton.IsChecked == true)
             {
                 TransferToDB transferToDB = new TransferToDB();
-                if (!transferToDB.Save("income", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
-                    AmountInput.Text, PercentInput.Text, DateInput.Text))
+                if (!transferToDB.Save("income", DescriptionInput.Text, "0", "0",
+                    AmountInput.Text, DateInput.Text))
                 {
                     MessageBox.Show("Error. Try again later.");
                 }
                 else
                 {
                     MessageBox.Show("Added.");
+                    IncomeRadioButton.IsChecked = false;
+                    ExpenseRadioButton.IsChecked = false;
+                    AddWindow.Visibility = Visibility.Collapsed;
+                }
+            }
+            else if(ExpenseRadioButton.IsChecked == true)
+            {
+                Amount Amount = new Amount();
+                string amount = Amount.CalcAmount(Convert.ToDouble(PriceInput.Text), Convert.ToInt32(QuantityInput.Text)).ToString();
+                TransferToDB transferToDB = new TransferToDB();
+                if (!transferToDB.Save("expense", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
+                    amount, DateInput.Text))
+                {
+                    MessageBox.Show("Error. Try again later");
+                }
+                else
+                {
+                    MessageBox.Show("Added.");
+                    IncomeRadioButton.IsChecked = false;
+                    ExpenseRadioButton.IsChecked = false;
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }
             else
             {
-                TransferToDB transferToDB = new TransferToDB();
-                if (!transferToDB.Save("expense", DescriptionInput.Text, PriceInput.Text, QuantityInput.Text,
-                    AmountInput.Text, PercentInput.Text, DateInput.Text))
-                {
-                    MessageBox.Show("Added.");
-                }
-                else
-                {
-                    AddWindow.Visibility = Visibility.Collapsed;
-                }
-            }           
+                MessageBox.Show("Choose one!");
+            }
         }
 
         private void Calendar_DisplayModeChanged(object sender, System.Windows.Controls.CalendarModeChangedEventArgs e)
@@ -220,5 +240,22 @@ namespace UI
             CalendarText.Text = "ALL";
         }
 
+        private void IncomeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            DescriptionInput.IsEnabled = true;
+            AmountInput.IsEnabled = true;
+            DateInput.IsEnabled = true;
+            PriceInput.IsEnabled = false;
+            QuantityInput.IsEnabled = false;
+        }
+
+        private void ExpenseRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            DescriptionInput.IsEnabled = true;
+            AmountInput.IsEnabled = false;
+            DateInput.IsEnabled = true;
+            PriceInput.IsEnabled = true;
+            QuantityInput.IsEnabled = true;
+        }
     }
 }
