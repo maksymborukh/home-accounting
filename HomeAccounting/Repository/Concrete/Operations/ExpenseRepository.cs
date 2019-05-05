@@ -7,34 +7,37 @@ using System.Data;
 
 namespace Repository.Concrete.Operations
 {
-    public class ExpenseRepository : IExpenseRepository
+    public class ExpenseRepository : IRepository
     {
         DBManager dbManager = new DBManager("account");
         IDbConnection connection = null;
 
-        public void Insert(Expense expense)
+        public void Insert(object expense)
         {
             string commandText = "insert into expense (Description, Price, Quantity, Amount, Day, Month, Year)" +
                  "values (@Description, @Price, @Quantity, @Amount, @Day, @Month, @Year);";
-            dbManager.Insert(commandText, CommandType.Text, Param(expense).ToArray());
+            dbManager.Insert(commandText, CommandType.Text, Param((Expense)expense).ToArray());
         }
 
         public void Delete(long Id)
         {
-            var parameters = new List<IDbDataParameter>();
-            parameters.Add(dbManager.CreateParameter("@Id", Id, DbType.Int64));
+            var parameters = new List<IDbDataParameter>
+            {
+                dbManager.CreateParameter("@Id", Id, DbType.Int64)
+            };
 
             string commandText = "delete from expense where Id = @Id;";
             dbManager.Delete(commandText, CommandType.Text, parameters.ToArray());
         }
 
-        public List<Expense> GetAll()
+        public List<object> GetAll()
         {
             string commandText = "select * from expense";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
                 var expenses = new List<Expense>();
+                List<object> list = new List<object>();
                 while (dataReader.Read())
                 {
                     var expense = new Expense();
@@ -49,7 +52,12 @@ namespace Repository.Concrete.Operations
                     expenses.Add(expense);
                 }
 
-                return expenses;
+                foreach (var e in expenses)
+                {
+                    list.Add(e);
+                }
+
+                return list;
             }
             catch (Exception ex)
             {
@@ -62,13 +70,14 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public List<Expense> GetByFilter(int month, int year)
+        public List<object> GetByFilter(int month, int year)
         {
             string commandText = $"select * from expense where Month = {month} and Year = {year}";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
                 var expenses = new List<Expense>();
+                List<object> list = new List<object>();
                 while (dataReader.Read())
                 {
                     var expense = new Expense();
@@ -83,7 +92,12 @@ namespace Repository.Concrete.Operations
                     expenses.Add(expense);
                 }
 
-                return expenses;
+                foreach (var e in expenses)
+                {
+                    list.Add(e);
+                }
+
+                return list;
             }
             catch (Exception ex)
             {
@@ -96,10 +110,12 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public Expense GetByID(long id)
+        public object GetByID(long id)
         {
-            var parameters = new List<IDbDataParameter>();
-            parameters.Add(dbManager.CreateParameter("@Id", id, DbType.Int64));
+            var parameters = new List<IDbDataParameter>
+            {
+                dbManager.CreateParameter("@Id", id, DbType.Int64)
+            };
 
             string commandText = "select * from expense where Id = @Id;";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, parameters.ToArray(), out connection);
@@ -131,11 +147,11 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public void Update(Expense expense)
+        public void Update(object expense)
         {
             string commandText = "update expense set Description = @Description, Price = @Price, Quantity = @Quantity," +
                 " Amount = @Amount, Day = @Day, Month = @Month, Year = @Year where Id = @Id;";
-            dbManager.Update(commandText, CommandType.Text, Param(expense).ToArray());
+            dbManager.Update(commandText, CommandType.Text, Param((Expense)expense).ToArray());
         }
 
         public List<IDbDataParameter> Param(Expense expense)

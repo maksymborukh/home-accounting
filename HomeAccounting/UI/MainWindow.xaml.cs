@@ -163,6 +163,8 @@ namespace UI
                 else
                 {
                     MessageBox.Show("Added.");
+                    IncomeRadioButton.IsChecked = false;
+                    ExpenseRadioButton.IsChecked = false;
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }
@@ -179,6 +181,8 @@ namespace UI
                 else
                 {
                     MessageBox.Show("Added.");
+                    IncomeRadioButton.IsChecked = false;
+                    ExpenseRadioButton.IsChecked = false;
                     AddWindow.Visibility = Visibility.Collapsed;
                 }
             }

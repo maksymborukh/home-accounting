@@ -7,16 +7,16 @@ using System.Data;
 
 namespace Repository.Concrete.Operations
 {
-    public class IncomeRepository : IIncomeRepository
+    public class IncomeRepository : IRepository
     {
         DBManager dbManager = new DBManager("account");
         IDbConnection connection = null;
 
-        public void Insert(Income income)
+        public void Insert(object income)
         {
             string commandText = "insert into income (Description, Price, Quantity, Amount, Day, Month, Year)" +
                  "values (@Description, @Price, @Quantity, @Amount, @Day, @Month, @Year);";
-            dbManager.Insert(commandText, CommandType.Text, Param(income).ToArray());
+            dbManager.Insert(commandText, CommandType.Text, Param((Income)income).ToArray());
         }
 
         public void Delete(long Id)
@@ -28,13 +28,14 @@ namespace Repository.Concrete.Operations
             dbManager.Delete(commandText, CommandType.Text, parameters.ToArray());
         }
 
-        public List<Income> GetAll()
+        public List<object> GetAll()
         {
             string commandText = "select * from income";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
                 var incomes = new List<Income>();
+                List<object> list = new List<object>();
                 while (dataReader.Read())
                 {
                     var income = new Income();
@@ -46,10 +47,15 @@ namespace Repository.Concrete.Operations
                     income.Day = Convert.ToInt32(dataReader["Day"]);
                     income.Month = Convert.ToInt32(dataReader["Month"]);
                     income.Year = Convert.ToInt32(dataReader["Year"]);
-                    incomes.Add(income);
+                    incomes.Add(income);  
                 }
 
-                return incomes;
+                foreach (var i in incomes)
+                {
+                    list.Add(i);
+                }
+
+                return list;
             }
             catch (Exception ex)
             {
@@ -62,13 +68,14 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public List<Income> GetByFilter(int month, int year)
+        public List<object> GetByFilter(int month, int year)
         {
             string commandText = $"select * from income where Month = {month} and Year = {year}";
             var dataReader = dbManager.GetDataReader(commandText, CommandType.Text, null, out connection);
             try
             {
                 var incomes = new List<Income>();
+                List<object> list = new List<object>();
                 while (dataReader.Read())
                 {
                     var income = new Income();
@@ -83,7 +90,12 @@ namespace Repository.Concrete.Operations
                     incomes.Add(income);
                 }
 
-                return incomes;
+                foreach (var i in incomes)
+                {
+                    list.Add(i);
+                }
+
+                return list;
             }
             catch (Exception ex)
             {
@@ -96,7 +108,7 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public Income GetByID(long id)
+        public object GetByID(long id)
         {
             var parameters = new List<IDbDataParameter>();
             parameters.Add(dbManager.CreateParameter("@Id", id, DbType.Int64));
@@ -131,11 +143,11 @@ namespace Repository.Concrete.Operations
             }
         }
 
-        public void Update(Income income)
+        public void Update(object income)
         {
             string commandText = "update income set Description = @Description, Price =@Price, Quantity = @Quantity, " +
                 "Amount = @Amount, Day = @Day, Month = @Month, Year = @Year where Id = @Id;";
-            dbManager.Update(commandText, CommandType.Text, Param(income).ToArray());
+            dbManager.Update(commandText, CommandType.Text, Param((Income)income).ToArray());
         }
 
         public List<IDbDataParameter> Param(Income income)
